@@ -1,6 +1,4 @@
-import { useMemo } from "react";
-
-const OptionItem = ({ name }) => {
+const OptionItem = ({ name}) => {
     return (
         <div className="w-full p-2 hover:bg-gray-50 cursor-pointer rounded-md">
             <p>{name}</p>
@@ -8,20 +6,15 @@ const OptionItem = ({ name }) => {
     );
 }
 
-export const OptionList = () => {
-    const options = useMemo(() => [
-        { name: 'Disposition' },
-        { name: 'Agent' },
-        { name: 'Contact' },
-        { name: 'Intent' }
-    ], []);
-    
+export const OptionList = ({ options, onClickOption, onMouseEnter, onMouseLeave }) => {
     return (
-        <div className="w-32 rounded-md border border-gray-300 mt-5">
+        <div className="w-32 rounded-md border border-gray-300 mt-5" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             <ul>
                 {options.map((option, idx) => (
-                    <li key={idx}>
-                        <OptionItem { ...option } />
+                    <li key={idx} onClick={() => {
+                        onClickOption(option);
+                    }}>
+                        <OptionItem { ...option }/>
                     </li>
                 ))}
             </ul>

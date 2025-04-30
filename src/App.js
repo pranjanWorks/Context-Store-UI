@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
 import SearchBox from './SearchBox';
-import OptionList from './OptionList';
 
 function App() {
   return (
