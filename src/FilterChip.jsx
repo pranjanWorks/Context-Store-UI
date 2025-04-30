@@ -1,9 +1,15 @@
+const TextContainer = ({ text }) => {
+    return (
+        <p className="whitespace-nowrap">{text}</p>
+    );
+}
+
 const FilterChip = ({ filter }) => {
     return (
         <div className="flex justify-start items-center bg-slate-600">
-            <p className="whitespace-nowrap">{filter?.filter}: </p>
+            <TextContainer text={filter?.filter} />
             {filter?.filterValue && (
-                <p className="whitespace-nowrap">{filter?.filterValue}</p>
+                <TextContainer text={filter?.filterValue} />
             )}
         </div>
     );
