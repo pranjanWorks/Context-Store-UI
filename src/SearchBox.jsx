@@ -1,5 +1,6 @@
 import { useCallback, useState, useMemo, useRef, useLayoutEffect } from 'react';
 import OptionList from './OptionList';
+import FilterChip from './FilterChip';
 
 const SearchBox = () => {
     const [focusInSearch, setFocusInSearch] = useState(false);
@@ -21,13 +22,15 @@ const SearchBox = () => {
     }, [isHoverFilters]);
 
     const addFilter = useCallback((filter) => {
-        setFilters([...filters, filter]);
+        setFilters([...filters, { filter: filter.name }]);
         setFilterSelected(filter);
     }, [filters]);
 
     const setFilterOption = useCallback((filterOption) => {
         if (filterSelected) {
-            setFilters([...filters, filterOption]);
+            const newFilter = { ...filters[filters.length-1], filterValue: filterOption.name };
+            const updatedFilters = [ ...filters.slice(0,-1), newFilter ];
+            setFilters(updatedFilters);
             setFilterSelected(null);
         }
     }, [filterSelected, filters]);
@@ -65,10 +68,10 @@ const SearchBox = () => {
     
     return (
         <div className={searchBoxWrapper}>
-            <div className="flex">
-                <ul>
+            <div className="flex justify-start items-center">
+                <ul className="flex flex-nowrap">
                     {filters.map((filter, idx) => (
-                        <li style={{display: 'inline'}} className="display" key={idx}>{filter?.name}</li>
+                        <FilterChip filter={filter} />
                     ))}
                 </ul>
                 <input ref={searchInput} className="w-full h-full p-2 bg-gray-50 outline-none" placeholder="Search through tags or text" onFocus={onFocusInSearch} onBlur={onFocusOutSearch} />
