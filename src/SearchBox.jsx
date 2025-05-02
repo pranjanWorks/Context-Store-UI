@@ -11,6 +11,7 @@ const SearchBox = () => {
     const [filterSelected, setFilterSelected] = useState(null);
     const searchInput = useRef(null);
     const appContext = useContext(AppContext);
+    const searchText = useRef("");
     
     const onFocusInSearch = useCallback(() => {
         setFocusInSearch(true);
@@ -72,7 +73,7 @@ const SearchBox = () => {
                     </ul>
                 </div>
                 <div className="w-full">
-                    <input ref={searchInput} className="w-full h-full p-2 outline-none" placeholder="Search through tags or text" onFocus={onFocusInSearch} onBlur={onFocusOutSearch} />
+                    <input ref={searchInput} className="w-full h-full p-2 outline-none" placeholder="Search through tags or text" onFocus={onFocusInSearch} onBlur={onFocusOutSearch} onChange={e => searchText.current=e.target.value} />
                     {focusInSearch && ( filterSelected ? filterOptionsList : filtersList )}
                 </div>
             </div>
