@@ -1,6 +1,7 @@
-import { useCallback, useState, useMemo, useRef, useLayoutEffect } from 'react';
+import { useCallback, useState, useMemo, useRef, useLayoutEffect, useContext } from 'react';
 import OptionList from './OptionList';
 import FilterChip from './FilterChip';
+import { AppContext } from './context';
 
 const SearchBox = () => {
     const [focusInSearch, setFocusInSearch] = useState(false);
@@ -9,6 +10,7 @@ const SearchBox = () => {
     const [renderToggle, setRenderToggle] = useState(false);
     const [filterSelected, setFilterSelected] = useState(null);
     const searchInput = useRef(null);
+    const appContext = useContext(AppContext);
     
     const onFocusInSearch = useCallback(() => {
         setFocusInSearch(true);
@@ -40,19 +42,12 @@ const SearchBox = () => {
         [focusInSearch]
     );
 
-    const availableFilters = useMemo(() => [
-        { name: 'Disposition' },
-        { name: 'Agent' },
-        { name: 'Contact' },
-        { name: 'Intent' }
-    ], []);
+    const availableFilters = useMemo(() => Object.keys(appContext).map(key => ({ name: key })), [appContext]);
 
-    const availableFilterOptions = useMemo(() => [
-        { name: 'Filter option 1' },
-        { name: 'Filter option 2' },
-        { name: 'Filter option 3' },
-        { name: 'Filter option 4' }
-    ], []);
+    const availableFilterOptions = useMemo(() => {
+        const filterOptions = filterSelected ? appContext[filterSelected.name] : [];
+        return filterOptions.map(filterOption => ({ name: filterOption }));
+    }, [filterSelected, appContext]);
 
     const filtersList = useMemo(() => (
         <OptionList options={availableFilters} onClickOption={addFilter} onMouseEnter={() => setIsHoverFilters(true)} onMouseLeave={() => setIsHoverFilters(false)} />
