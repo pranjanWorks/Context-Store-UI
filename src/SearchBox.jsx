@@ -36,7 +36,7 @@ const SearchBox = () => {
     }, [filterSelected, filters]);
 
     const searchBoxWrapper = useMemo(() => 
-        `w-full h-16 rounded-lg border border-gray-300 bg-gray-50 p-4 ${focusInSearch ? "ring-blue-500 border-blue-500" : ""}`, 
+        `w-full h-16 rounded-lg border border-gray-300 p-4 ${focusInSearch ? "ring-blue-500 border-blue-500" : ""}`, 
         [focusInSearch]
     );
 
@@ -70,14 +70,14 @@ const SearchBox = () => {
         <div className={searchBoxWrapper}>
             <div className="h-full flex justify-start items-start">
                 <div className="h-full flex justify-start items-center">
-                    <ul className="flex flex-nowrap">
+                    <ul className="flex flex-nowrap space-x-1">
                         {filters.map((filter, idx) => (
                             <FilterChip filter={filter} />
                         ))}
                     </ul>
                 </div>
                 <div className="w-full">
-                    <input ref={searchInput} className="w-full h-full p-2 bg-gray-50 outline-none" placeholder="Search through tags or text" onFocus={onFocusInSearch} onBlur={onFocusOutSearch} />
+                    <input ref={searchInput} className="w-full h-full p-2 outline-none" placeholder="Search through tags or text" onFocus={onFocusInSearch} onBlur={onFocusOutSearch} />
                     {focusInSearch && ( filterSelected ? filterOptionsList : filtersList )}
                 </div>
             </div>
