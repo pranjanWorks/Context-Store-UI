@@ -68,15 +68,19 @@ const SearchBox = () => {
     
     return (
         <div className={searchBoxWrapper}>
-            <div className="flex justify-start items-center">
-                <ul className="flex flex-nowrap">
-                    {filters.map((filter, idx) => (
-                        <FilterChip filter={filter} />
-                    ))}
-                </ul>
-                <input ref={searchInput} className="w-full h-full p-2 bg-gray-50 outline-none" placeholder="Search through tags or text" onFocus={onFocusInSearch} onBlur={onFocusOutSearch} />
+            <div className="h-full flex justify-start items-start">
+                <div className="h-full flex justify-start items-center">
+                    <ul className="flex flex-nowrap">
+                        {filters.map((filter, idx) => (
+                            <FilterChip filter={filter} />
+                        ))}
+                    </ul>
+                </div>
+                <div className="w-full">
+                    <input ref={searchInput} className="w-full h-full p-2 bg-gray-50 outline-none" placeholder="Search through tags or text" onFocus={onFocusInSearch} onBlur={onFocusOutSearch} />
+                    {focusInSearch && ( filterSelected ? filterOptionsList : filtersList )}
+                </div>
             </div>
-            {focusInSearch && ( filterSelected ? filterOptionsList : filtersList )}
         </div>
     );
 }
