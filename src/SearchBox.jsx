@@ -38,6 +38,15 @@ const SearchBox = () => {
         }
     }, [filterSelected, filters]);
 
+    const clearFilter = useCallback((idx) => {
+        const updatedFilters = [ ...filters ];
+        updatedFilters.splice(idx,1);
+        setFilters(updatedFilters);
+        if (idx === filters.length-1 && filterSelected) {
+            setFilterSelected(null);
+        }
+    }, [filterSelected, filters]);
+
     const searchBoxWrapper = useMemo(() => 
         `w-full h-16 rounded-lg border border-gray-300 p-4 ${focusInSearch ? "ring-blue-500 border-blue-500" : ""}`, 
         [focusInSearch]
@@ -68,7 +77,7 @@ const SearchBox = () => {
                 <div className="h-full flex justify-start items-center">
                     <ul className="flex flex-nowrap space-x-1">
                         {filters.map((filter, idx) => (
-                            <FilterChip filter={filter} />
+                            <FilterChip filter={filter} onClear={() => clearFilter(idx)} />
                         ))}
                     </ul>
                 </div>
