@@ -48,7 +48,7 @@ const SearchBox = () => {
     }, [filterSelected, filters]);
 
     const searchBoxWrapper = useMemo(() => 
-        `w-full h-16 rounded-lg border border-gray-300 p-4 ${focusInSearch ? "ring-blue-500 border-blue-500" : ""}`, 
+        `relative w-full h-16 rounded-lg border border-gray-300 p-4 ${focusInSearch ? "ring-blue-500 border-blue-500" : ""}`, 
         [focusInSearch]
     );
 

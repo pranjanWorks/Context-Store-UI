@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import SearchResultsTable from "./SearchResultsTable";
+import SearchBox from "./SearchBox";
 
 const ContextStore = () => {
     const results = useMemo(() => ([
@@ -61,7 +62,8 @@ const ContextStore = () => {
       ]), []);
 
       return (
-        <div className="h-screen w-full p-4 flex justify-center items-center">
+        <div className="h-full w-full p-4 flex flex-col justify-start items-center gap-16">
+            <SearchBox />
             <SearchResultsTable results={results} />
         </div>
       );

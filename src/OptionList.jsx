@@ -8,7 +8,7 @@ const OptionItem = ({ name}) => {
 
 export const OptionList = ({ options, onClickOption, onMouseEnter, onMouseLeave }) => {
     return (
-        <div className="w-32 rounded-md border border-gray-300 mt-5" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div className="w-32 rounded-md border border-gray-300 mt-5 bg-white opacity-100" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             <ul>
                 {options.map((option, idx) => (
                     <li key={idx} onClick={() => {
