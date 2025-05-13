@@ -64,7 +64,7 @@ const SearchBox = ({ setResults }) => {
         if (res?.data?.results?.length) {
             const rows = res?.data?.results.map(item => ({
                 date: item?.metadata?.date,
-                user: item?.metadata?.user,
+                contact: item?.metadata?.contact,
                 agent: item?.metadata?.agent,
                 issue: item?.issue,
                 resolution: [ ...item?.resolution ]

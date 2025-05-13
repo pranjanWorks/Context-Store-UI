@@ -2,7 +2,7 @@
   {
   "metadata": {
       "date": "2024-01-15",
-      "user": "Alice Smith",
+      "contact": "Alice Smith",
       "agent": "Bob Johnson"
   },
     "issue": "Cannot log in to account. Password reset not working.",
@@ -16,7 +16,7 @@
   {
   "metadata": {
       "date": "2024-01-20",
-      "user": "Charlie Brown",
+      "contact": "Charlie Brown",
       "agent": "Diana Lee"
   },
     "issue": "Order not received. Tracking shows 'delivered' but package is missing.",
@@ -31,7 +31,7 @@
   "metadata":
   {
     "date": "2024-01-25",
-    "user": "Eve Wilson",
+    "contact": "Eve Wilson",
     "agent": "Frank Miller"
   },
     "issue": "Product is defective. Screen flickering and unresponsive.",
@@ -45,7 +45,7 @@
   {
   "metadata": {
     "date": "2024-02-01",
-    "user": "George Taylor",
+    "contact": "George Taylor",
     "agent": "Helen White"
   },
     "issue": "Billing inquiry. Incorrect amount charged to credit card.",
@@ -59,7 +59,7 @@
   {
   "metadata": {
     "date": "2024-02-05",
-    "user": "Ivy Moore",
+    "contact": "Ivy Moore",
     "agent": "Jack Green"
   },
     "issue": "Need help setting up new device. Instructions unclear.",
@@ -73,7 +73,7 @@
   {
   "metadata": {
     "date": "2024-02-10",
-    "user": "Kevin Clark",
+    "contact": "Kevin Clark",
     "agent": "Laura Hall"
   },
     "issue": "Subscription cancellation request. Unable to find cancellation option on website.",
@@ -87,7 +87,7 @@
   {
   "metadata": {
     "date": "2024-02-15",
-    "user": "Mia Davis",
+    "contact": "Mia Davis",
     "agent": "Samantha Baker"
   },
     "issue": "Compatibility issue with existing software. New update causing conflicts.",
@@ -101,7 +101,7 @@
   {
   "metadata": {
     "date": "2024-02-20",
-    "user": "Oscar Reed",
+    "contact": "Oscar Reed",
     "agent": "Laura Hall"
   },
     "issue": "Feedback on product design. Suggestion for improvement.",
@@ -115,7 +115,7 @@
   {
   "metadata": {
     "date": "2024-02-25",
-    "user": "Quinn Wright",
+    "contact": "Quinn Wright",
     "agent": "Samantha Baker"
   },
     "issue": "Question about product features. Clarification needed on specific functionality.",
@@ -129,7 +129,7 @@
   {
   "metadata": {
     "date": "2024-03-01",
-    "user": "Sophia Hill",
+    "contact": "Sophia Hill",
     "agent": "Samantha Baker"
   },
     "issue": "Complaint about slow internet speed. Experiencing frequent disconnections.",

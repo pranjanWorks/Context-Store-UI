@@ -225,6 +225,7 @@ def index_mapping():
     print(response)
 
 @app.route('/get_all_data', methods=['GET'])
+@cross_origin()
 def get_all_data():
     """
     Retrieve all documents from the Elasticsearch index.

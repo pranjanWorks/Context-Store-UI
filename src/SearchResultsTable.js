@@ -8,7 +8,7 @@ const SearchResultsTable = ({ results }) => {
                             Date
                         </th>
                         <th scope="col" className="px-6 py-3 w-[120px]">
-                            User
+                            Contact
                         </th>
                         <th scope="col" className="px-6 py-3 w-[140px]">
                             Agent
@@ -28,7 +28,7 @@ const SearchResultsTable = ({ results }) => {
                                 {result?.date}
                             </td>
                             <td className="px-6 py-4">
-                                {result?.user}
+                                {result?.contact}
                             </td>
                             <td className="px-6 py-4">
                                 {result?.agent}
