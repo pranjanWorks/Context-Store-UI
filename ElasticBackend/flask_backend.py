@@ -37,7 +37,7 @@ def ingest_summary():
 
     # Prepare the document for ingestion
     doc = {
-        'my_text': summary,         # This field will be embedded by the pipeline
+        'my_issue': summary,         # This field will be embedded by the pipeline
         'my_metadata': metadata     # Any extra info (optional)
     }
 
@@ -82,7 +82,7 @@ def search_summaries():
         if valid_keywords:
             keyword_query = {
                 "bool": {
-                    "must": [{"match": {"my_text": keyword}} for keyword in valid_keywords],
+                    "must": [{"match": {"my_issue": keyword}} for keyword in valid_keywords],
                 }
             }
             search_query["bool"]["must"].append(keyword_query)
@@ -91,7 +91,7 @@ def search_summaries():
     # Add metadata filters if provided
     if metadata_filters:
         for key, value in metadata_filters.items():
-            term_query = {"term": {f"my_metadata.{key}": value}}
+            term_query = {"match": {f"my_metadata.{key}": value}}
             search_query["bool"]["filter"].append(term_query)
 
     if query_text:
@@ -107,7 +107,7 @@ def search_summaries():
             },
             "filter": {
                 "bool": {
-                    "filter": [{"term": {f"my_metadata.{key}": value}}
+                    "filter": [{"match": {f"my_metadata.{key}": value}}
                                for key, value in metadata_filters.items()]
                 }
             }
@@ -118,21 +118,23 @@ def search_summaries():
             index=INDEX_NAME,
             knn=knn_component,
             query=search_query,
-            _source=["my_text", "my_metadata"],
+            sort=["_score"],
+            _source=["my_issue", "my_metadata", "resolution"],
         )
         # Transform the response for the frontend
         hits = response["hits"]["hits"]
         results = [{
-            "id": hit["_id"],
+            # "id": hit["_id"],
             "score": hit["_score"],
-            "text": hit["_source"]["my_text"] ,
-            "metadata": hit["_source"].get("my_metadata", {})
+            "issue": hit["_source"]["my_issue"] ,
+            "metadata": hit["_source"].get("my_metadata", {}),
+            "resolution": hit["_source"].get("resolution", [])
         } for hit in hits]
 
         return jsonify({
             "results": results,
             "total": response["hits"]["total"]["value"],
-            "took_ms": response["took"]
+            # "took_ms": response["took"]
         }), 200
 
     except Exception as e:
@@ -144,7 +146,7 @@ def ingest_pipeline_setup():
         "processors": [
             {
                 "inference": {
-                    "field_map": {"my_text": "text_field"},             # map model's text_field to my_text
+                    "field_map": {"my_issue": "text_field"},             # map model's text_field to my_issue
                     "model_id": "sentence-transformers__all-distilroberta-v1",
                     "target_field": "ml.inference.my_vector",   # map model's output to my_vector
                     "on_failure": [
@@ -196,8 +198,9 @@ def index_mapping():
     mappings = {
         "properties": {
             "my_vector": {"type": "dense_vector", "dims": 768,"index": 'true', "similarity": "cosine"},
-            "my_text": {"type": "text"},
+            "my_issue": {"type": "text"},
             "my_metadata": {"type": "object"},
+            "resolution": {"type": "keyword"},
         },
         "_source": {"excludes": ["my_vector"]},
     }
@@ -238,8 +241,9 @@ def get_all_data():
         results = [{
             "id": hit["_id"],
             "score": hit["_score"],
-            "text": hit["_source"].get("my_text", ""),
-            "metadata": hit["_source"].get("my_metadata", {})
+            "issue": hit["_source"].get("my_issue", ""),
+            "metadata": hit["_source"].get("my_metadata", {}),
+            "resolution": hit["_source"].get("resolution", {})
         } for hit in hits]
 
         return jsonify({
@@ -257,7 +261,7 @@ def reset_index():
     es.indices.create(index=INDEX_NAME)
 
 def bulk_ingest():
-    json_file = os.path.join(os.path.dirname(__file__), "summaries.json")
+    json_file = os.path.join(os.path.dirname(__file__), "data.json")
 
     with open(json_file, "r") as json_file:
         data = json.load(json_file)
@@ -266,7 +270,7 @@ def bulk_ingest():
         {
             "_op_type": "index",
             "_index": INDEX_NAME,
-            "_source": {"my_text": text["summary"], "my_metadata": text["metadata"]},
+            "_source": {"my_issue": text["issue"], "my_metadata": text["metadata"], "resolution": text["resolution"]},
         }
         for text in data
     ]
@@ -276,6 +280,8 @@ def bulk_ingest():
 
     # Refresh the index to make sure all data is searchable
     es.indices.refresh(index=INDEX_NAME)
+
+
 if __name__ == '__main__':
     ingest_pipeline_setup()
     index_mapping()
@@ -284,3 +290,10 @@ if __name__ == '__main__':
 
     # Run the Flask app
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+# TODO Create ingest pipeline for summaries to data
+# 1. Take summaries.json as input
+# 2. Find a model to extract the required fields
+# 3. Map to the model format (refer data.json for fields)
+# 4. Return data into data.json
+# 4. Consume data.json via bulk_ingest()
