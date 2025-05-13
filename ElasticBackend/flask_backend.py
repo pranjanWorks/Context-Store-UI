@@ -10,8 +10,12 @@ from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 # from torch.onnx._internal.diagnostics.infra.sarif import Exception
 
+from flask_cors import CORS, cross_origin
+
 # Initialize Flask app
 app = Flask(__name__)
+cors = CORS(app) # allow CORS for all domains on all routes.
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Elasticsearch connection setup
 # NOTE: Replace with your actual Elasticsearch API key and endpoint if different
@@ -49,6 +53,7 @@ def ingest_summary():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/search', methods=['PUT'])
+@cross_origin()
 def search_summaries():
     """
     Search for call summaries using keywords and/or semantic queries.

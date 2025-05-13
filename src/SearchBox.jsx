@@ -3,6 +3,7 @@ import OptionList from './OptionList';
 import FilterChip from './FilterChip';
 import { AppContext } from './context';
 import { resultsSample } from './mock';
+import axios from 'axios';
 
 const SearchBox = ({ setResults }) => {
     const [focusInSearch, setFocusInSearch] = useState(false);
@@ -48,6 +49,30 @@ const SearchBox = ({ setResults }) => {
         }
     }, [filterSelected, filters]);
 
+    const searchRecords = useCallback(async () => {
+        const metadata_filters = {};
+        filters.forEach(filter => {
+            if (filter?.filterValue) {
+                metadata_filters[filter?.filter] = filter?.filterValue;
+            }
+        });
+        const data = {
+            query: searchText.current,
+            metadata_filters
+        };
+        const res = await axios.put('http://127.0.0.1:5000/search', data);
+        if (res?.data?.results?.length) {
+            const rows = res?.data?.results.map(item => ({
+                date: item?.metadata?.date,
+                user: item?.metadata?.user,
+                agent: item?.metadata?.agent,
+                issue: item?.issue,
+                resolution: [ ...item?.resolution ]
+            }));
+            setResults(rows);
+        }
+    }, [filters, setResults]);
+
     const searchBoxWrapper = useMemo(() => 
         `relative w-full h-16 rounded-lg border border-gray-300 p-4 ${focusInSearch ? "ring-blue-500 border-blue-500" : ""}`, 
         [focusInSearch]
@@ -86,7 +111,7 @@ const SearchBox = ({ setResults }) => {
                     <input ref={searchInput} className="w-full h-full p-2 outline-none" placeholder="Search through tags or text" onFocus={onFocusInSearch} onBlur={onFocusOutSearch} onChange={e => searchText.current=e.target.value} />
                     {focusInSearch && ( filterSelected ? filterOptionsList : filtersList )}
                 </div>
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 " onClick={() => setResults(resultsSample)}>Search</button>
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 " onClick={searchRecords}>Search</button>
             </div>
         </div>
     );
