@@ -11,6 +11,7 @@ from elasticsearch.helpers import bulk
 # from torch.onnx._internal.diagnostics.infra.sarif import Exception
 
 from flask_cors import CORS, cross_origin
+from transformers import pipeline
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -20,7 +21,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # Elasticsearch connection setup
 # NOTE: Replace with your actual Elasticsearch API key and endpoint if different
 ES_API_KEY = os.environ.get('ES_API_KEY', 'SjkteHBKWUJZcml2dGNPLTVSY1I6UVFnOXhPbF9PLTBLZUxRWEhIbERIZw==')
-ES_HOST = os.environ.get('ES_HOST', 'https://383e-2401-4900-883b-f869-8c22-f15c-868c-3ae1.ngrok-free.app/')
+ES_HOST = os.environ.get('ES_HOST', 'https://4df5-223-185-134-38.ngrok-free.app/')
 INDEX_NAME = 'my_vector_index-01'  # Should match the index created in your pipeline
 PIPELINE_ID = "vector_embedding_demo"
 # Connect to Elasticsearch
@@ -267,7 +268,7 @@ def reset_index():
     es.indices.create(index=INDEX_NAME)
 
 def bulk_ingest():
-    json_file = os.path.join(os.path.dirname(__file__), "data.json")
+    json_file = os.path.join(os.path.dirname(__file__), "processed_data.json")
 
     with open(json_file, "r") as json_file:
         data = json.load(json_file)
@@ -287,8 +288,45 @@ def bulk_ingest():
     # Refresh the index to make sure all data is searchable
     es.indices.refresh(index=INDEX_NAME)
 
+def populate_context_store():
+    # Load the question-answering pipeline
+    qa_pipeline = pipeline("question-answering", model="distilbert-base-cased-distilled-squad")
+
+    # Define questions
+    question_issue = "What is the issue described? Express in customers point of view"
+    question_resolution = "What steps were required to solve the issue?"
+
+    json_file = os.path.join(os.path.dirname(__file__), "summaries.json")
+    output_json_file_path = os.path.join(os.path.dirname(__file__), "processed_data.json")
+
+    processed_data = []
+
+    with open(json_file, "r") as json_file:
+        data = json.load(json_file)
+
+    for text in data:
+        summary_text = text["summary"]
+        metadata = text["metadata"]
+
+        # Get answers
+        issue_result = qa_pipeline(question=question_issue, context=summary_text)
+        resolution_result = qa_pipeline(question=question_resolution, context=summary_text)
+
+        # Extracted information
+        extracted_issue = issue_result['answer']
+        extracted_resolution_text = resolution_result['answer']
+
+        processed_data.append({
+            "metadata": metadata,
+            "issue": extracted_issue,
+            "resolution": extracted_resolution_text.split("."),
+        })
+
+        with open(output_json_file_path, "w") as outfile:
+            json.dump(processed_data, outfile, indent=2)
 
 if __name__ == '__main__':
+    populate_context_store()
     ingest_pipeline_setup()
     index_mapping()
     reset_index()
@@ -296,10 +334,3 @@ if __name__ == '__main__':
 
     # Run the Flask app
     app.run(host='0.0.0.0', port=5000, debug=True)
-
-# TODO Create ingest pipeline for summaries to data
-# 1. Take summaries.json as input
-# 2. Find a model to extract the required fields
-# 3. Map to the model format (refer data.json for fields)
-# 4. Return data into data.json
-# 4. Consume data.json via bulk_ingest()

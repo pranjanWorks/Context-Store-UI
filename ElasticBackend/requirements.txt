@@ -239,3 +239,6 @@ yarl==1.9.4
 zipp @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_31jm3q76eq/croot/zipp_1704206913245/work
 zope.event==5.0
 zope.interface==6.2
+
+flask~=2.2.5
+flask-cors~=3.0.10
