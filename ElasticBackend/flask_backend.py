@@ -13,6 +13,10 @@ from elasticsearch.helpers import bulk
 from flask_cors import CORS, cross_origin
 from transformers import pipeline
 
+#OpenAI
+from openai import OpenAI
+openAIClient = OpenAI()
+
 # Initialize Flask app
 app = Flask(__name__)
 cors = CORS(app) # allow CORS for all domains on all routes.
@@ -20,14 +24,15 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Elasticsearch connection setup
 # NOTE: Replace with your actual Elasticsearch API key and endpoint if different
-ES_API_KEY = os.environ.get('ES_API_KEY', 'SjkteHBKWUJZcml2dGNPLTVSY1I6UVFnOXhPbF9PLTBLZUxRWEhIbERIZw==')
-ES_HOST = os.environ.get('ES_HOST', 'https://4df5-223-185-134-38.ngrok-free.app/')
+ES_API_KEY = os.environ.get('ES_API_KEY', 'UVd6SzJKWUJuamJ5X2w2WWY5Q0I6b2Y4TXNQSTRUYUxMSi0zMk9aX0Vsdw==')
+ES_HOST = os.environ.get('ES_HOST', 'http://localhost:9200')
 INDEX_NAME = 'my_vector_index-01'  # Should match the index created in your pipeline
 PIPELINE_ID = "vector_embedding_demo"
 # Connect to Elasticsearch
 es = Elasticsearch(ES_HOST, api_key=ES_API_KEY)
 
 @app.route('/ingest_summary', methods=['PUT'])
+@cross_origin()
 def ingest_summary():
     """
     Ingest a call summary (between customer and agent) into Elasticsearch.
@@ -40,10 +45,24 @@ def ingest_summary():
     if not summary:
         return jsonify({'error': 'Missing summary'}), 400
 
+    # Extract issue and resolution from summary
+    issue_extraction_prompt = f"Here is the summary of a conversation between an agent and a customer. \
+        In one to two lines only, provide the description of the problem that the customer is facing. \
+            Here is the summary - {summary}"
+    
+    problem_resolution_prompt = f"Here is the summary of a conversation between an agent and a customer. \
+        In max 4 or less concise statements, describe how the agent resolved customer's issue. Here is the summary - {summary}"
+    
+    issue = openAIClient.responses.create(model="gpt-4.1", input=issue_extraction_prompt).output_text
+    resolution = openAIClient.responses.create(model="gpt-4.1", input=problem_resolution_prompt).output_text
+
+    resolution_arr = resolution.split('.')
+
     # Prepare the document for ingestion
     doc = {
-        'my_issue': summary,         # This field will be embedded by the pipeline
-        'my_metadata': metadata     # Any extra info (optional)
+        'my_issue': issue,         # This field will be embedded by the pipeline
+        'my_metadata': metadata,
+        'resolution': resolution_arr
     }
 
     # Index the document (Elasticsearch pipeline will handle embedding)
