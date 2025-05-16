@@ -1,0 +1,133 @@
+[
+  {
+    "metadata": {
+      "contact": "Shaun Malik",
+      "agent": "Vicky Sharma",
+      "date": "2024-02-15"
+    },
+    "issue": "Payment pending, but bank debited amount. No order confirmation.",
+    "resolution": [
+      "Webhook misconfigured.",
+      "Updated webhook URL.",
+      "Replayed events.",
+      "Order confirmed, confirmation sent."
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Shaun Malik",
+      "agent": "Rahn Ho",
+      "date": "2024-02-15"
+    },
+    "issue": "Payment pending, charged but no order confirmation.",
+    "resolution": [
+      "No order in system.",
+      "Pending transaction in gateway.",
+      "Transferred to Payment Specialist."
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Brad pitts",
+      "agent": "Vicky Sharma",
+      "date": "2024-02-15"
+    },
+    "issue": "Charged, but site shows payment pending.",
+    "resolution": [
+      "Similar issue: Webhook misconfiguration.",
+      "Transferred to Payment Specialist."
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Shaun Malik",
+      "agent": "Vicky Sharma",
+      "date": "2024-02-15"
+    },
+    "issue": "Recurring payment pending issue.",
+    "resolution": [
+      "Webhook pointed to old endpoint.",
+      "Updated webhook.",
+      "Replayed events.",
+      "Order created, confirmation sent."
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Angelina Jolie",
+      "agent": "Rahn Ho",
+      "date": "2024-02-15"
+    },
+    "issue": "Payment pending 48 hours after order.",
+    "resolution": [
+      "Payment authorized, webhook failed.",
+      "Manually triggered webhook.",
+      "Order updated, confirmation sent."
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Tom Cruise",
+      "agent": "Vicky Sharma",
+      "date": "2024-02-15"
+    },
+    "issue": "Payment pending on recent purchase.",
+    "resolution": [
+      "Payment successful, system update failed.",
+      "Manually updated order status.",
+      "Confirmation email sent."
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Scarlett Johansson",
+      "agent": "Rahn Ho",
+      "date": "2024-02-15"
+    },
+    "issue": "Payment pending during purchase.",
+    "resolution": [
+      "Payment method misconfigured.",
+      "Updated payment method.",
+      "Purchase completed."
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Leonardo DiCaprio",
+      "agent": "Vicky Sharma",
+      "date": "2024-02-15"
+    },
+    "issue": "Payment stuck in pending, urgent order.",
+    "resolution": [
+      "Delay in payment status update.",
+      "Expedited payment processing.",
+      "Order confirmed, shipping soon."
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Jennifer Aniston",
+      "agent": "Rahn Ho",
+      "date": "2024-02-15"
+    },
+    "issue": "Payment pending, amount deducted.",
+    "resolution": [
+      "Connectivity problem with gateway.",
+      "Contacted gateway provider.",
+      "Payment updated, order confirmed."
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Robert Downey Jr.",
+      "agent": "Vicky Sharma",
+      "date": "2024-02-15"
+    },
+    "issue": "Order stuck in payment pending, unsure if placed.",
+    "resolution": [
+      "Order created, payment status not updated.",
+      "Manually updated payment status.",
+      "Confirmation email sent."
+    ]
+  }
+]

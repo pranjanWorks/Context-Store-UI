@@ -295,6 +295,7 @@ def populate_context_store():
     # Define questions
     question_issue = "What is the issue described? Express in customers point of view"
     question_resolution = "What steps were required to solve the issue?"
+    question_metadata_category = "What was the category of the issue?"
 
     json_file = os.path.join(os.path.dirname(__file__), "summaries.json")
     output_json_file_path = os.path.join(os.path.dirname(__file__), "processed_data.json")
@@ -316,6 +317,9 @@ def populate_context_store():
         extracted_issue = issue_result['answer']
         extracted_resolution_text = resolution_result['answer']
 
+        if not metadata.get("category"):
+            metadata["category"] = qa_pipeline(question=question_metadata_category, context=summary_text)['answer']
+
         processed_data.append({
             "metadata": metadata,
             "issue": extracted_issue,
@@ -326,7 +330,7 @@ def populate_context_store():
             json.dump(processed_data, outfile, indent=2)
 
 if __name__ == '__main__':
-    populate_context_store()
+    # populate_context_store()
     ingest_pipeline_setup()
     index_mapping()
     reset_index()
