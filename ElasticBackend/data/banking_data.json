@@ -1,0 +1,82 @@
+[
+  {
+    "metadata": {
+      "contact": "Vivek Sharma",
+      "agent": "Abhishek Banerjee",
+      "date": "2024-03-15"
+    },
+    "issue": "Card transaction declined due to fraud detection or unusual activity.",
+    "resolution": [
+      "Verify identity",
+      "Review flagged transaction",
+      "Lift hold or whitelist merchant",
+      "Confirm retry success"
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Shubham Patel",
+      "agent": "Ravi Kumar",
+      "date": "2024-01-07"
+    },
+    "issue": "Account locked after multiple failed login attempts.",
+    "resolution": [
+      "Confirm customer identity",
+      "Reset login credentials",
+      "Unlock account access"
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Vikram Singh",
+      "agent": "Adiya Shrivastav",
+      "date": "2024-08-12"
+    },
+    "issue": "Fund transfer remains pending or not received by beneficiary.",
+    "resolution": [
+      "Locate transaction",
+      "Identify delay or error",
+      "Manually process or reinitiate transfer"
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Rohan Sethi",
+      "agent": "Neha Chatterjee",
+      "date": "2024-01-18"
+    },
+    "issue": "Duplicate transaction appears on account for a single purchase",
+    "resolution": [
+      "Verify both charges",
+      "Confirm merchant error or system issue",
+      "File chargeback/dispute",
+      "Notify customer"
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Lakshmi Subramanian",
+      "agent": "Jaddeep Singh",
+      "date": "2024-09-14"
+    },
+    "issue": "Bill payment failed at biller’s end but funds were deducted",
+    "resolution": [
+      "Confirm payment failure with biller",
+      "Initiate refund or reversal",
+      "Share reference details with customer"
+    ]
+  },
+  {
+    "metadata": {
+      "contact": "Prateek Ratnadeep",
+      "agent": "Vicky Sharma",
+      "date": "2024-05-21"
+    },
+    "issue": "Card declines for international or cross-border transactions.",
+    "resolution": [
+      "Authenticate caller",
+      "Enable international usage in system",
+      "Inform of FX rates and limits"
+    ]
+  }
+]

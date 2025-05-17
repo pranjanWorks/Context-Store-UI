@@ -287,7 +287,7 @@ def reset_index():
     es.indices.create(index=INDEX_NAME)
 
 def bulk_ingest():
-    json_file = os.path.join(os.path.dirname(__file__), "processed_data.json")
+    json_file = os.path.join(os.path.dirname(__file__), "data/banking_data.json")
 
     with open(json_file, "r") as json_file:
         data = json.load(json_file)
