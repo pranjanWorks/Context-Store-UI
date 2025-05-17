@@ -60,7 +60,9 @@ const SearchBox = ({ setResults }) => {
             query: searchText.current,
             metadata_filters
         };
-        const res = await axios.put('http://127.0.0.1:5000/search', data);
+        const res = (filters.length || searchText.current) ? 
+                await axios.put('http://127.0.0.1:5000/search', data) : 
+                await axios.get('http://127.0.0.1:5000/get_all_data');
         if (res?.data?.results?.length) {
             const rows = res?.data?.results.map(item => ({
                 date: item?.metadata?.date,
