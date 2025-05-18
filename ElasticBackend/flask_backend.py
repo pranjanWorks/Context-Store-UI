@@ -51,7 +51,7 @@ def ingest_summary():
             Here is the summary - {summary}"
     
     problem_resolution_prompt = f"Here is the summary of a conversation between an agent and a customer. \
-        In max 4 or less concise statements, describe how the agent resolved customer's issue. Here is the summary - {summary}"
+        In a few concise sentences, describe how the agent resolved customer's issue. Here is the summary - {summary}"
     
     issue = openAIClient.responses.create(model="gpt-4.1", input=issue_extraction_prompt).output_text
     resolution = openAIClient.responses.create(model="gpt-4.1", input=problem_resolution_prompt).output_text
