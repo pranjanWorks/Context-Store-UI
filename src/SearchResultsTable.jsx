@@ -10,6 +10,9 @@ const SearchResultsTable = ({ results }) => {
                         <th scope="col" className="px-6 py-3 w-[120px]">
                             Contact
                         </th>
+                        <th scope="col" className="px-6 py-3 w-[120px]">
+                            Phone
+                        </th>
                         <th scope="col" className="px-6 py-3 w-[140px]">
                             Agent
                         </th>
@@ -29,6 +32,9 @@ const SearchResultsTable = ({ results }) => {
                             </td>
                             <td className="px-6 py-4">
                                 {result?.contact}
+                            </td>
+                            <td className="px-6 py-4">
+                                {result?.phone}
                             </td>
                             <td className="px-6 py-4">
                                 {result?.agent}

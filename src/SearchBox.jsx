@@ -67,6 +67,7 @@ const SearchBox = ({ setResults }) => {
             const rows = res?.data?.results.map(item => ({
                 date: item?.metadata?.date,
                 contact: item?.metadata?.contact,
+                phone: item?.metadata?.phone,
                 agent: item?.metadata?.agent,
                 issue: item?.issue,
                 resolution: [ ...item?.resolution ]
@@ -98,6 +99,36 @@ const SearchBox = ({ setResults }) => {
     useLayoutEffect(() => {
         focusInSearch ? searchInput.current.focus() : searchInput.current.blur();
     });
+
+    useLayoutEffect(() => {
+        const eventHandler = async (event) => {
+            const { type, payload } = event.data;
+            console.log('===== event msg received =====', event);
+            if (type === 'POPULATE_BY_ANI') {
+                const metadata_filters = {
+                    phone: payload?.aniE164 || payload?.ani
+                }
+                const res = await axios.put('http://127.0.0.1:5000/search', { metadata_filters });
+                if (res?.data?.results?.length) {
+                    const rows = res?.data?.results.map(item => ({
+                        date: item?.metadata?.date,
+                        contact: item?.metadata?.contact,
+                        phone: item?.metadata?.phone,
+                        agent: item?.metadata?.agent,
+                        issue: item?.issue,
+                        resolution: [ ...item?.resolution ]
+                    }));
+                    setResults(rows);
+                }
+            }
+        }
+        
+        window.addEventListener('message', eventHandler);
+
+        return () => {
+          window.removeEventListener('message', eventHandler);
+        }
+      }, [setResults]);
     
     return (
         <div className={searchBoxWrapper}>

@@ -3,7 +3,8 @@
     "metadata": {
       "contact": "Vivek Sharma",
       "agent": "Abhishek Banerjee",
-      "date": "2024-03-15"
+      "date": "2024-03-15",
+      "phone": "+916206774459"
     },
     "issue": "Card transaction declined due to fraud detection or unusual activity.",
     "resolution": [
@@ -17,7 +18,8 @@
     "metadata": {
       "contact": "Shubham Patel",
       "agent": "Ravi Kumar",
-      "date": "2024-01-07"
+      "date": "2024-01-07",
+      "phone": "+916206774451"
     },
     "issue": "Account locked after multiple failed login attempts.",
     "resolution": [
@@ -30,7 +32,8 @@
     "metadata": {
       "contact": "Vikram Singh",
       "agent": "Adiya Shrivastav",
-      "date": "2024-08-12"
+      "date": "2024-08-12",
+      "phone": "+916206774452"
     },
     "issue": "Fund transfer remains pending or not received by beneficiary.",
     "resolution": [
@@ -43,7 +46,8 @@
     "metadata": {
       "contact": "Rohan Sethi",
       "agent": "Neha Chatterjee",
-      "date": "2024-01-18"
+      "date": "2024-01-18",
+      "phone": "+916206774453"
     },
     "issue": "Duplicate transaction appears on account for a single purchase",
     "resolution": [
@@ -55,9 +59,10 @@
   },
   {
     "metadata": {
-      "contact": "Lakshmi Subramanian",
+      "contact": "Pratyush Ranjan",
       "agent": "Jaddeep Singh",
-      "date": "2024-09-14"
+      "date": "2024-09-14",
+      "phone": "+916851098354"
     },
     "issue": "Bill payment failed at biller’s end but funds were deducted",
     "resolution": [
@@ -68,9 +73,10 @@
   },
   {
     "metadata": {
-      "contact": "Prateek Ratnadeep",
+      "contact": "Pratyush Ranjan",
       "agent": "Vicky Sharma",
-      "date": "2024-05-21"
+      "date": "2024-05-21",
+      "phone": "+916851098354"
     },
     "issue": "Card declines for international or cross-border transactions.",
     "resolution": [
