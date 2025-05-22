@@ -24,7 +24,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Elasticsearch connection setup
 # NOTE: Replace with your actual Elasticsearch API key and endpoint if different
-ES_API_KEY = os.environ.get('ES_API_KEY', 'UVd6SzJKWUJuamJ5X2w2WWY5Q0I6b2Y4TXNQSTRUYUxMSi0zMk9aX0Vsdw==')
+ES_API_KEY = os.environ.get('ES_API_KEY', 'NG94SjVKWUJrdXp6Vi1ERXNfbU06OGprX1VUZEJvOUVrTEplSlhEc21VUQ==')
 ES_HOST = os.environ.get('ES_HOST', 'http://localhost:9200')
 INDEX_NAME = 'my_vector_index-01'  # Should match the index created in your pipeline
 PIPELINE_ID = "vector_embedding_demo"
